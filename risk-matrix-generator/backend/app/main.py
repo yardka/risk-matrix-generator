@@ -28,7 +28,7 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
-_allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5500,http://127.0.0.1:5500")
+_allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5500,http://127.0.0.1:5500,https://yardka.github.io")
 origins_list = [o.strip() for o in _allowed_origins.split(",")]
 
 app.add_middleware(
