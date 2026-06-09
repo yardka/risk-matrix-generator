@@ -11,7 +11,7 @@ import json
 # Forzar UTF-8 en la salida estándar (necesario en Windows con cp1252)
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
-BASE = "http://localhost:8000"
+BASE = "https://risk-matrix-generator.onrender.com"
 
 def sep(label, status):
     print(f"\n{'='*60}")
