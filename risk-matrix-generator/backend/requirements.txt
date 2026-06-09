@@ -1,0 +1,22 @@
+# ============================================================
+# risk-matrix-generator — Backend Dependencies
+# ============================================================
+
+# Web Framework
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+
+# Data Validation
+pydantic==2.8.2
+
+# Database
+SQLAlchemy==2.0.36
+
+# Environment Variables
+python-dotenv==1.0.1
+
+# CORS (para conectar con el frontend)
+# FastAPI ya incluye soporte via starlette
+
+# Utilidades de desarrollo
+httpx==0.27.2          # Para tests del cliente HTTP

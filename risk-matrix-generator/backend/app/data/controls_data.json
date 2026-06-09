@@ -1,0 +1,242 @@
+{
+  "controls_by_level": {
+    "low": [
+      {
+        "id": "ISO-A.8.9",
+        "framework": "ISO 27001:2022",
+        "category": "Preventivo",
+        "name": "Gestión de configuración",
+        "description": "Mantener configuraciones documentadas y revisadas periódicamente.",
+        "priority": "Largo plazo"
+      },
+      {
+        "id": "NIST-ID.AM-1",
+        "framework": "NIST CSF 2.0",
+        "category": "Preventivo",
+        "name": "Inventario de activos",
+        "description": "Registrar y mantener un inventario actualizado del activo.",
+        "priority": "Largo plazo"
+      }
+    ],
+    "medium": [
+      {
+        "id": "ISO-A.8.7",
+        "framework": "ISO 27001:2022",
+        "category": "Preventivo",
+        "name": "Protección contra malware",
+        "description": "Implementar y mantener software antimalware actualizado en el activo.",
+        "priority": "Corto plazo"
+      },
+      {
+        "id": "ISO-A.8.16",
+        "framework": "ISO 27001:2022",
+        "category": "Detectivo",
+        "name": "Monitoreo de actividades",
+        "description": "Activar logs de auditoría y revisarlos mensualmente.",
+        "priority": "Corto plazo"
+      },
+      {
+        "id": "NIST-PR.AC-3",
+        "framework": "NIST CSF 2.0",
+        "category": "Preventivo",
+        "name": "Gestión de acceso remoto",
+        "description": "Restringir y auditar el acceso remoto mediante MFA y VPN.",
+        "priority": "Corto plazo"
+      },
+      {
+        "id": "ISO-A.8.9",
+        "framework": "ISO 27001:2022",
+        "category": "Preventivo",
+        "name": "Gestión de configuración",
+        "description": "Implementar hardening de configuraciones según benchmarks CIS.",
+        "priority": "Largo plazo"
+      }
+    ],
+    "high": [
+      {
+        "id": "ISO-A.5.24",
+        "framework": "ISO 27001:2022",
+        "category": "Correctivo",
+        "name": "Planificación de respuesta a incidentes",
+        "description": "Definir y probar un plan de respuesta a incidentes que cubra este riesgo.",
+        "priority": "Inmediata"
+      },
+      {
+        "id": "ISO-A.8.15",
+        "framework": "ISO 27001:2022",
+        "category": "Detectivo",
+        "name": "Registro de eventos (Logging)",
+        "description": "Implementar logging centralizado (SIEM) con alertas en tiempo real.",
+        "priority": "Inmediata"
+      },
+      {
+        "id": "NIST-PR.AC-1",
+        "framework": "NIST CSF 2.0",
+        "category": "Preventivo",
+        "name": "Gestión de identidades y accesos",
+        "description": "Aplicar principio de mínimo privilegio y revisar accesos mensualmente.",
+        "priority": "Inmediata"
+      },
+      {
+        "id": "ISO-A.8.13",
+        "framework": "ISO 27001:2022",
+        "category": "Correctivo",
+        "name": "Backup y recuperación",
+        "description": "Implementar copias de seguridad cifradas con pruebas de restauración trimestrales.",
+        "priority": "Corto plazo"
+      },
+      {
+        "id": "NIST-PR.DS-1",
+        "framework": "NIST CSF 2.0",
+        "category": "Preventivo",
+        "name": "Cifrado de datos en reposo",
+        "description": "Cifrar datos sensibles usando AES-256 o equivalente.",
+        "priority": "Corto plazo"
+      }
+    ],
+    "critical": [
+      {
+        "id": "ISO-A.5.24",
+        "framework": "ISO 27001:2022",
+        "category": "Correctivo",
+        "name": "Activación del Plan de Respuesta a Incidentes",
+        "description": "URGENTE: Activar el equipo de respuesta a incidentes. Escalar a la dirección inmediatamente.",
+        "priority": "Inmediata"
+      },
+      {
+        "id": "ISO-A.5.30",
+        "framework": "ISO 27001:2022",
+        "category": "Correctivo",
+        "name": "Plan de Continuidad de Negocio (BCP)",
+        "description": "URGENTE: Ejecutar el BCP para garantizar continuidad de operaciones críticas.",
+        "priority": "Inmediata"
+      },
+      {
+        "id": "ISO-A.8.22",
+        "framework": "ISO 27001:2022",
+        "category": "Preventivo",
+        "name": "Segmentación de red",
+        "description": "URGENTE: Aislar el activo afectado en una VLAN restringida hasta mitigar el riesgo.",
+        "priority": "Inmediata"
+      },
+      {
+        "id": "NIST-RS.CO-2",
+        "framework": "NIST CSF 2.0",
+        "category": "Correctivo",
+        "name": "Reporte de incidentes",
+        "description": "Notificar al DPO y a las autoridades regulatorias competentes según GDPR/LOPDGDD.",
+        "priority": "Inmediata"
+      },
+      {
+        "id": "NIST-PR.AC-1",
+        "framework": "NIST CSF 2.0",
+        "category": "Preventivo",
+        "name": "Revocación de accesos",
+        "description": "Revocar o suspender todos los accesos no esenciales al activo comprometido.",
+        "priority": "Inmediata"
+      },
+      {
+        "id": "ISO-A.8.13",
+        "framework": "ISO 27001:2022",
+        "category": "Correctivo",
+        "name": "Restauración desde backup",
+        "description": "Verificar integridad del último backup y preparar plan de restauración.",
+        "priority": "Corto plazo"
+      },
+      {
+        "id": "ISO-A.5.36",
+        "framework": "ISO 27001:2022",
+        "category": "Preventivo",
+        "name": "Revisión independiente de seguridad",
+        "description": "Contratar auditoría externa de seguridad (Pentest / Red Team) en los próximos 30 días.",
+        "priority": "Corto plazo"
+      }
+    ]
+  },
+  "controls_by_asset_type": {
+    "data": [
+      {
+        "id": "ISO-A.8.10",
+        "framework": "ISO 27001:2022",
+        "category": "Preventivo",
+        "name": "Eliminación segura de información",
+        "description": "Aplicar política de retención y destrucción segura de datos (NIST 800-88).",
+        "priority": "Largo plazo"
+      },
+      {
+        "id": "NIST-PR.DS-5",
+        "framework": "NIST CSF 2.0",
+        "category": "Preventivo",
+        "name": "Prevención de pérdida de datos (DLP)",
+        "description": "Implementar solución DLP para prevenir exfiltración de datos sensibles.",
+        "priority": "Corto plazo"
+      }
+    ],
+    "network": [
+      {
+        "id": "ISO-A.8.20",
+        "framework": "ISO 27001:2022",
+        "category": "Preventivo",
+        "name": "Seguridad de redes",
+        "description": "Implementar firewalls de nueva generación (NGFW) y segmentación de red.",
+        "priority": "Corto plazo"
+      }
+    ],
+    "people": [
+      {
+        "id": "ISO-A.6.3",
+        "framework": "ISO 27001:2022",
+        "category": "Preventivo",
+        "name": "Concienciación y formación en seguridad",
+        "description": "Implementar programa de formación en ciberseguridad y simulacros de phishing.",
+        "priority": "Corto plazo"
+      }
+    ],
+    "software": [
+      {
+        "id": "ISO-A.8.29",
+        "framework": "ISO 27001:2022",
+        "category": "Preventivo",
+        "name": "Pruebas de seguridad en desarrollo",
+        "description": "Integrar análisis SAST/DAST en el pipeline CI/CD.",
+        "priority": "Largo plazo"
+      }
+    ],
+    "hardware": [
+      {
+        "id": "ISO-A.7.9",
+        "framework": "ISO 27001:2022",
+        "category": "Preventivo",
+        "name": "Seguridad de equipos fuera de las instalaciones",
+        "description": "Aplicar cifrado de disco completo (FDE) y gestión remota de dispositivos (MDM).",
+        "priority": "Corto plazo"
+      }
+    ],
+    "service": [
+      {
+        "id": "ISO-A.5.19",
+        "framework": "ISO 27001:2022",
+        "category": "Preventivo",
+        "name": "Seguridad en la cadena de suministro",
+        "description": "Evaluar seguridad del proveedor mediante cuestionarios SIG/CAIQ y SLAs con garantías de seguridad.",
+        "priority": "Largo plazo"
+      }
+    ],
+    "physical": [
+      {
+        "id": "ISO-A.7.1",
+        "framework": "ISO 27001:2022",
+        "category": "Preventivo",
+        "name": "Perímetro de seguridad física",
+        "description": "Reforzar controles de acceso físico: tarjetas, CCTV y registros de visitantes.",
+        "priority": "Corto plazo"
+      }
+    ]
+  },
+  "treatment_strategies": {
+    "low": "ACEPTAR el riesgo con monitoreo periódico. Documentar la aceptación formal por parte del propietario del activo.",
+    "medium": "MITIGAR el riesgo implementando los controles sugeridos en el corto plazo. Revisar el riesgo residual en 90 días.",
+    "high": "TRATAR el riesgo con urgencia. Elaborar un Plan de Tratamiento de Riesgos (PTR) con responsables y fechas. Revisar mensualmente.",
+    "critical": "ACCIÓN INMEDIATA REQUERIDA. Escalar a la dirección. Activar controles de emergencia. Evaluar TRANSFERIR el riesgo mediante póliza de ciberseguro o EVITAR discontinuando la operación afectada."
+  }
+}
