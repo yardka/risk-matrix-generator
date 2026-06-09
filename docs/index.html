@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Risk Matrix Generator — Gestión de Riesgos ISO 27001</title>
+    <meta name="description" content="Herramienta profesional para la gestión de riesgos de activos de información. Implementa ISO/IEC 27001:2022 y NIST CSF 2.0." />
+    <meta name="api-base" content="https://risk-matrix-generator.onrender.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+
+    <header id="app-header">
+        <div class="header-inner">
+            <div class="header-brand">
+                <div class="brand-icon" aria-hidden="true">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                </div>
+                <div>
+                    <h1 class="brand-title">Risk Matrix Generator</h1>
+                    <p class="brand-sub">ISO/IEC 27001:2022 · NIST CSF 2.0 · MAGERIT v3</p>
+                </div>
+            </div>
+            <div id="backend-status" class="status-badge status-loading" role="status" aria-live="polite">
+                <span class="status-dot"></span>
+                <span class="status-text">Conectando…</span>
+            </div>
+        </div>
+    </header>
+
+    <nav id="app-nav" role="tablist" aria-label="Secciones principales">
+        <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="section-matrix" id="tab-matrix" data-tab="matrix">
+            <span class="tab-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span> Matriz de Calor
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="section-classify" id="tab-classify" data-tab="classify">
+            <span class="tab-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span> Clasificar Activo
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="section-risk" id="tab-risk" data-tab="risk">
+            <span class="tab-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></span> Calcular Riesgo
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="section-controls" id="tab-controls" data-tab="controls">
+            <span class="tab-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span> Controles
+        </button>
+    </nav>
+
+    <main id="app-main">
+
+        <section id="section-matrix" class="tab-section active" role="tabpanel" aria-labelledby="tab-matrix">
+            <div class="section-header">
+                <h2>Matriz de Calor 5×5</h2>
+                <p class="section-desc">Cada celda muestra el puntaje de riesgo (Probabilidad <strong>x</strong> Impacto). Pasa el cursor sobre una celda para ver sus detalles.</p>
+            </div>
+            <div class="matrix-wrapper">
+                <div class="matrix-y-label">Probabilidad <span aria-hidden="true">&rarr;</span></div>
+                <div class="matrix-container">
+                    <div id="matrix-grid" class="matrix-grid" role="grid" aria-label="Matriz de riesgo 5 por 5"></div>
+                    <div id="matrix-x-axis" class="matrix-x-axis"></div>
+                </div>
+                <div id="matrix-y-axis" class="matrix-y-axis"></div>
+            </div>
+            <div class="matrix-legend">
+                <span class="legend-item"><span class="legend-dot" style="background:var(--risk-low)"></span>Bajo (1–4)</span>
+                <span class="legend-item"><span class="legend-dot" style="background:var(--risk-medium)"></span>Medio (5–9)</span>
+                <span class="legend-item"><span class="legend-dot" style="background:var(--risk-high)"></span>Alto (10–16)</span>
+                <span class="legend-item"><span class="legend-dot" style="background:var(--risk-critical)"></span>Crítico (17–25)</span>
+            </div>
+            <div id="matrix-tooltip" class="matrix-tooltip" role="tooltip" aria-hidden="true">
+                <div class="tooltip-arrow" aria-hidden="true"></div>
+            </div>
+        </section>
+
+        <section id="section-classify" class="tab-section" role="tabpanel" aria-labelledby="tab-classify">
+            <div class="section-header">
+                <h2>Clasificar Activo de Información</h2>
+                <p class="section-desc">Determina la criticidad de un activo a partir de su perfil de Confidencialidad, Integridad y Disponibilidad (triada CIA).</p>
+            </div>
+            <div class="two-col">
+                <div class="card">
+                    <h3 class="card-title">Datos del Activo</h3>
+                    <form id="form-classify" novalidate>
+                        <div class="field">
+                            <label for="cl-asset-name">Nombre del Activo</label>
+                            <input type="text" id="cl-asset-name" placeholder="Ej: Servidor de Base de Datos" required minlength="2" maxlength="120" />
+                        </div>
+                        <div class="field">
+                            <label for="cl-asset-type">Tipo de Activo</label>
+                            <select id="cl-asset-type" required>
+                                <option value="">Seleccionar tipo…</option>
+                                <option value="hardware">Hardware</option>
+                                <option value="software">Software</option>
+                                <option value="data">Datos</option>
+                                <option value="network">Red</option>
+                                <option value="people">Personas</option>
+                                <option value="physical">Físico</option>
+                                <option value="service">Servicio</option>
+                            </select>
+                        </div>
+                        <div class="field-group">
+                            <div class="field">
+                                <label for="cl-conf">Confidencialidad</label>
+                                <select id="cl-conf" required>
+                                    <option value="">Nivel…</option>
+                                    <option value="low">Baja</option>
+                                    <option value="medium">Media</option>
+                                    <option value="high">Alta</option>
+                                    <option value="critical">Crítica</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="cl-integ">Integridad</label>
+                                <select id="cl-integ" required>
+                                    <option value="">Nivel…</option>
+                                    <option value="low">Baja</option>
+                                    <option value="medium">Media</option>
+                                    <option value="high">Alta</option>
+                                    <option value="critical">Crítica</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="cl-avail">Disponibilidad</label>
+                                <select id="cl-avail" required>
+                                    <option value="">Nivel…</option>
+                                    <option value="low">Baja</option>
+                                    <option value="medium">Media</option>
+                                    <option value="high">Alta</option>
+                                    <option value="critical">Crítica</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="btn-classify">
+                            <span class="btn-text">Clasificar Activo</span>
+                            <span class="btn-loader" aria-hidden="true"></span>
+                        </button>
+                    </form>
+                </div>
+                <div class="card result-card" id="result-classify">
+                    <div class="result-placeholder">
+                        <div class="placeholder-icon" aria-hidden="true">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                        </div>
+                        <p>El resultado de la clasificación aparecerá aquí.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-risk" class="tab-section" role="tabpanel" aria-labelledby="tab-risk">
+            <div class="section-header">
+                <h2>Calcular Riesgo Intrínseco / Residual</h2>
+                <p class="section-desc">Aplica la fórmula <strong>Riesgo = Probabilidad x Impacto</strong> para evaluar el riesgo antes y después de aplicar controles.</p>
+            </div>
+            <div class="two-col">
+                <div class="card">
+                    <h3 class="card-title">Parámetros de la Amenaza</h3>
+                    <form id="form-risk" novalidate>
+                        <div class="field-group">
+                            <div class="field">
+                                <label for="rk-threat">Nombre de la Amenaza</label>
+                                <input type="text" id="rk-threat" placeholder="Ej: Ransomware" required minlength="2" />
+                            </div>
+                            <div class="field">
+                                <label for="rk-asset">Activo Amenazado</label>
+                                <input type="text" id="rk-asset" placeholder="Ej: Servidor BD" required minlength="2" />
+                            </div>
+                        </div>
+                        <div class="risk-inputs-grid">
+                            <div class="risk-col risk-col-intrinsic">
+                                <h4 class="risk-col-title"><span class="risk-indicator intrinsic-indicator" aria-hidden="true"></span> Sin Controles (Intrínseco)</h4>
+                                <div class="field">
+                                    <label for="rk-iprob">Probabilidad (1–5)</label>
+                                    <input type="range" id="rk-iprob" min="1" max="5" value="3" class="slider" />
+                                    <output for="rk-iprob" id="rk-iprob-val" class="slider-val">3</output>
+                                </div>
+                                <div class="field">
+                                    <label for="rk-iimp">Impacto (1–5)</label>
+                                    <input type="range" id="rk-iimp" min="1" max="5" value="3" class="slider" />
+                                    <output for="rk-iimp" id="rk-iimp-val" class="slider-val">3</output>
+                                </div>
+                            </div>
+                            <div class="risk-col risk-col-residual">
+                                <h4 class="risk-col-title"><span class="risk-indicator residual-indicator" aria-hidden="true"></span> Con Controles (Residual)</h4>
+                                <div class="field">
+                                    <label for="rk-rprob">Probabilidad (1–5)</label>
+                                    <input type="range" id="rk-rprob" min="1" max="5" value="2" class="slider" />
+                                    <output for="rk-rprob" id="rk-rprob-val" class="slider-val">2</output>
+                                </div>
+                                <div class="field">
+                                    <label for="rk-rimp">Impacto (1–5)</label>
+                                    <input type="range" id="rk-rimp" min="1" max="5" value="2" class="slider" />
+                                    <output for="rk-rimp" id="rk-rimp-val" class="slider-val">2</output>
+                                </div>
+                            </div>
+                        </div>
+                        <p id="rk-slider-error" class="field-error" style="display:none">El riesgo residual no puede superar al intrínseco.</p>
+                        <button type="submit" class="btn btn-primary" id="btn-risk">
+                            <span class="btn-text">Calcular Riesgo</span>
+                            <span class="btn-loader" aria-hidden="true"></span>
+                        </button>
+                    </form>
+                </div>
+                <div class="card result-card" id="result-risk">
+                    <div class="result-placeholder">
+                        <div class="placeholder-icon" aria-hidden="true">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
+                        </div>
+                        <p>Los niveles de riesgo intrínseco y residual aparecerán aquí.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-controls" class="tab-section" role="tabpanel" aria-labelledby="tab-controls">
+            <div class="section-header">
+                <h2>Controles de Seguridad Recomendados</h2>
+                <p class="section-desc">Obtén recomendaciones de controles alineadas con ISO/IEC 27001:2022 Annex A y NIST CSF 2.0 basadas en el nivel de riesgo y tipo de activo.</p>
+            </div>
+            <div class="two-col">
+                <div class="card controls-card">
+                    <h3 class="card-title">Parámetros</h3>
+                    <form id="form-controls" novalidate>
+                        <div class="field">
+                            <label for="ct-risk-level">Nivel de Riesgo</label>
+                            <select id="ct-risk-level" required>
+                                <option value="">Seleccionar nivel…</option>
+                                <option value="low">Bajo</option>
+                                <option value="medium">Medio</option>
+                                <option value="high">Alto</option>
+                                <option value="critical">Crítico</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="ct-asset-type">Tipo de Activo</label>
+                            <select id="ct-asset-type" required>
+                                <option value="">Seleccionar tipo…</option>
+                                <option value="hardware">Hardware</option>
+                                <option value="software">Software</option>
+                                <option value="data">Datos</option>
+                                <option value="network">Red</option>
+                                <option value="people">Personas</option>
+                                <option value="physical">Físico</option>
+                                <option value="service">Servicio</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="btn-controls">
+                            <span class="btn-text">Obtener Controles</span>
+                            <span class="btn-loader" aria-hidden="true"></span>
+                        </button>
+                    </form>
+                </div>
+                <div id="result-controls" class="controls-result">
+                    <div class="result-placeholder">
+                        <div class="placeholder-icon" aria-hidden="true">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <p>Los controles recomendados aparecerán aquí.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="app-footer">
+        <p>Risk Matrix Generator &copy; 2026 &nbsp;·&nbsp; ISO/IEC 27001:2022 &nbsp;·&nbsp; NIST CSF 2.0 &nbsp;·&nbsp; MAGERIT v3</p>
+    </footer>
+
+    <template id="tpl-classify-result">
+        <div class="classify-result">
+            <div class="classify-header">
+                <p class="classify-header-label">Activo Clasificado</p>
+                <p class="classify-asset-name"></p>
+                <p class="classify-asset-type"></p>
+            </div>
+            <span class="criticality-badge"></span>
+            <div class="cia-grid">
+                <div class="cia-item">
+                    <div class="cia-label">Confidencialidad</div>
+                    <div class="cia-value"></div>
+                </div>
+                <div class="cia-item">
+                    <div class="cia-label">Integridad</div>
+                    <div class="cia-value"></div>
+                </div>
+                <div class="cia-item">
+                    <div class="cia-label">Disponibilidad</div>
+                    <div class="cia-value"></div>
+                </div>
+            </div>
+            <div class="cia-score-bar">
+                <div class="score-bar-label">
+                    <span>Score CIA</span>
+                    <span class="score-bar-value"></span>
+                </div>
+                <div class="score-bar-track">
+                    <div class="score-bar-fill" style="width:0%"></div>
+                </div>
+            </div>
+            <div class="rationale-box"></div>
+        </div>
+    </template>
+
+    <template id="tpl-risk-result">
+        <div class="risk-result">
+            <div class="risk-header">
+                <p class="risk-threat-name"></p>
+                <p class="risk-asset-name"></p>
+            </div>
+            <div class="risk-compare">
+                <div class="risk-card">
+                    <div class="risk-card-label"><span class="risk-indicator intrinsic-indicator" aria-hidden="true"></span> Intrínseco</div>
+                    <div class="risk-score-big"></div>
+                    <div class="risk-level-badge"></div>
+                    <div class="risk-sub risk-sub-formula"></div>
+                    <div class="risk-sub risk-sub-labels"></div>
+                </div>
+                <div class="risk-card">
+                    <div class="risk-card-label"><span class="risk-indicator residual-indicator" aria-hidden="true"></span> Residual</div>
+                    <div class="risk-score-big"></div>
+                    <div class="risk-level-badge"></div>
+                    <div class="risk-sub risk-sub-formula"></div>
+                    <div class="risk-sub risk-sub-labels"></div>
+                </div>
+            </div>
+            <div class="reduction-section">
+                <div class="reduction-label">
+                    <span>Reducción de riesgo</span>
+                    <span class="reduction-value"></span>
+                </div>
+                <div class="reduction-bar-track">
+                    <div class="reduction-bar-fill" style="width:0%"></div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="tpl-controls-result">
+        <div class="controls-header-block">
+            <p class="controls-header-label">Plan de Tratamiento</p>
+            <div class="treatment-plan"></div>
+            <p class="controls-summary"></p>
+        </div>
+        <div class="controls-tabs"></div>
+        <div id="controls-list-container" class="controls-list"></div>
+    </template>
+
+    <template id="tpl-control-item">
+        <div class="control-item">
+            <div class="control-header">
+                <span class="control-id"></span>
+                <span class="control-framework"></span>
+                <span class="control-category"></span>
+            </div>
+            <div class="control-name"></div>
+            <div class="control-desc"></div>
+        </div>
+    </template>
+
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
